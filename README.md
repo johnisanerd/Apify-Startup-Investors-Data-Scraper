@@ -66,4 +66,6 @@ You can see more documentation on how to use the [Startup Investors scraper here
 [**Made with ❤️**](https://apify.com/johnvc?fpr=9n7kx3)
 
 *Transform your search automation with the most reliable and efficient Congressional stock trades scraper on the market.*
-Last Updated: 2025.09.05
+
+
+Last Updated: 2025.09.01
