@@ -1,8 +1,8 @@
 # Apify Startup Investors
 Scrape and access thousands of venture investors and family offices.
-[Scrape the US Startup Investors:  get transactions from both the House and the Senate.](https://apify.com/johnvc/apify-startup-investors-data-scraper?fpr=9n7kx3)
+[Scrape the US Startup Investors:  discover US startup investors!](https://apify.com/johnvc/startup-investors-data-scraper?fpr=9n7kx3)
 
-9,312 investors at your fingertips (as of September, 2025). The most comprehensive startup investor database for finding funding and customers. Access detailed investor profiles and investment patterns to accelerate your startup's growth, find customers, and conduct comprehensive market research.
+9,312 investors at your fingertips (as of November, 2025). The most comprehensive startup investor database for finding funding and customers. Access detailed investor profiles and investment patterns to accelerate your startup's growth, find customers, and conduct comprehensive market research.
 
 > **The most efficient, reliable, and developer-friendly Startup Investors scraper**
 
@@ -60,7 +60,7 @@ export APIFY_API_TOKEN="your_api_key_here"
 python fetch-startup-investors-scraper.py
 ```
 
-You can see more documentation on how to use the [Startup Investors scraper here.](https://apify.com/johnvc/apify-startup-investors-data-scraper?fpr=9n7kx3)
+You can see more documentation on how to use the [Startup Investors scraper here.](https://apify.com/johnvc/startup-investors-data-scraper?fpr=9n7kx3)
 
 
 [**Made with ❤️**](https://apify.com/johnvc?fpr=9n7kx3)
