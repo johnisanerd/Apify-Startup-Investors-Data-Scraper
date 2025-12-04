@@ -34,6 +34,7 @@ run_input = {
     "Max_Results": 100,
     "Order_By": "created_at",
     "Order_Direction": "desc",
+    "Include_Contacts": True,       # Gets the contacts
 }
 
 # Run the Actor and wait for it to finish
