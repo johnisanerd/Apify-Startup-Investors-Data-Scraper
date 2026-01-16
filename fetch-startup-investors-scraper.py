@@ -30,7 +30,7 @@ run_input = {
         "Series A",
     ],
     "Countries": ["United States"],
-    "Keyword": None,
+    "Keyword": "",
     "Max_Results": 100,
     "Order_By": "created_at",
     "Order_Direction": "desc",
