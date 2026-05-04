@@ -31,7 +31,7 @@ run_input = {
     ],
     "Countries": ["United States"],
     "Keyword": "",
-    "Max_Results": 100,
+    "Max_Results": 50,
     "Order_By": "created_at",
     "Order_Direction": "desc",
     "Include_Contacts": True,       # Gets the contacts
