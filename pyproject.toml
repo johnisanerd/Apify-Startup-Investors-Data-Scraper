@@ -1,10 +1,13 @@
 [project]
-name = "apify-startup-investors"
+name = "apify-startup-investors-api"
 version = "0.1.0"
-description = "Add your description here"
+description = "Example client for the Startup Investors API Apify Actor"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
-    "apify-client>=2.3.0",
-    "python-dotenv>=1.2.1",
+    "apify-client>=3.0.0",
+    "python-dotenv>=1.0.0",
 ]
+
+[tool.uv]
+package = false

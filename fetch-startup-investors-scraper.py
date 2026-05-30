@@ -1,45 +1,69 @@
 """
-Fetch Startup Investors: A Quick Start Example
-Scrape the US Startup Investors:  get transactions from both the House and the Senate.
-See more at https://apify.com/johnvc/apify-startup-investors-data-scraper?fpr=9n7kx3
+Example: call the Startup Investors API Apify Actor from Python.
 
-This script demonstrates how to use the Startup Investors Scraper Actor
-to search Startup Investors and retrieve structured search results.
+Get a free Apify API key at: https://apify.com?fpr=9n7kx3
+Set it in a .env file (see .env.example) or export APIFY_API_TOKEN.
 
-https://docs.apify.com/api/client/python/docs/overview/introduction
-
-
+The Actor searches a curated database of investor firms (venture capital,
+angel, accelerator, private equity, family office, and more). This example
+keeps Max_Results small and leaves contacts off so the first run is cheap:
+each firm returned is billed, and enabling contacts adds a per-contact fee.
 """
 
 import os
-from typing import Dict, Any, Optional
-from dotenv import load_dotenv
+
 from apify_client import ApifyClient
+from dotenv import load_dotenv
 
 load_dotenv()
 
-# Initialize the ApifyClient with your API token
-client = ApifyClient(os.getenv("APIFY_API_TOKEN"))
+APIFY_API_TOKEN = os.getenv("APIFY_API_TOKEN")
+if not APIFY_API_TOKEN:
+    raise SystemExit(
+        "APIFY_API_TOKEN is not set. Copy .env.example to .env and add your key, "
+        "or run: export APIFY_API_TOKEN=your_api_key_here"
+    )
 
-# Prepare the Actor input.  In this case we are going to search for Startup Investors in the United States.
+client = ApifyClient(APIFY_API_TOKEN)
+
+# Inputs are kept small so the first run is inexpensive: a narrow keyword,
+# only 3 firms, and contacts off (each firm is billed; contacts cost extra).
 run_input = {
     "Firm_Types": ["Venture Capital Investor"],
-    "Focus_Areas": ["Artificial Intelligence"],
-    "Investment_Stages": [
-        "Seed",
-        "Series A",
-    ],
-    "Countries": ["United States"],
-    "Keyword": "",
-    "Max_Results": 50,
-    "Order_By": "created_at",
-    "Order_Direction": "desc",
-    "Include_Contacts": True,       # Gets the contacts
+    "Keyword": "Sequoia",
+    "Max_Results": 3,
+    "Order_By": "firm_name",
+    "Order_Direction": "asc",
+    "Include_Contacts": False,  # set True to also pull investor contacts (billed per contact)
 }
 
-# Run the Actor and wait for it to finish
-run = client.actor("SVdYzqKOwfJT7shHd").call(run_input=run_input)
+print(f"Searching investor firms for keyword: {run_input['Keyword']}")
+run = client.actor("johnvc/startup-investors-data-scraper").call(run_input=run_input)
 
-# Fetch and print Actor results from the run's dataset (if there are any)
-for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-    print(item)
+if run is None:
+    raise SystemExit("The Actor run did not start. Check your API token and inputs.")
+
+items = list(client.dataset(run.default_dataset_id).iterate_items())
+print(f"\nReturned {len(items)} investor firms.\n")
+
+for i, firm in enumerate(items, start=1):
+    name = firm.get("firm_name", "")
+    ftype = firm.get("firm_type_id", "")
+    location = ", ".join(p for p in (firm.get("firm_city"), firm.get("firm_state"), firm.get("firm_country")) if p)
+    website = firm.get("firm_website", "")
+    stages = ", ".join(firm.get("firm_stages") or [])
+    focus = ", ".join(firm.get("firm_focus") or [])
+
+    print(f"{i}. {name} ({ftype})")
+    print(f"   Location: {location}")
+    print(f"   Website:  {website}")
+    if stages:
+        print(f"   Stages:   {stages}")
+    if focus:
+        print(f"   Focus:    {focus}")
+
+    # When Include_Contacts is True, each firm also has an investor_contacts list.
+    contacts = firm.get("investor_contacts") or []
+    if contacts:
+        print(f"   Contacts: {len(contacts)} (name, title, email when available, LinkedIn)")
+    print()
