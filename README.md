@@ -292,4 +292,4 @@ More help: https://docs.apify.com/platform/integrations/mcp
 
 *Use the Startup Investors API to power fundraising research, investor prospecting, and market analysis with reliable, structured data.*
 
-Last Updated: 2026.07.11
+Last Updated: 2026.07.12
